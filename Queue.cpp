@@ -13,11 +13,28 @@
 
 // Description:  Constructor
 Queue::Queue() : elementCount(0), capacity(INITIAL_CAPACITY), frontindex(0), backindex(0) {
+    this->elements = new int[INITIAL_CAPACITY];
 } 
 
 
 // Description:  Inserts element x at the back (O(1))
-void Queue::enqueue(int x) {
+void Queue::enqueue(int x) 
+{
+    if (this->elementCount == this->capacity)
+    {
+        int cap = this->capacity * 2;
+        int* newelements = new int[cap];
+        for (int i = 0; i < this->elementCount; i++)
+        {
+            newelements[i] = this->elements[this->frontindex];
+            this->frontindex = (this->frontindex + 1) % this->capacity;
+        }
+        this->frontindex = 0;
+        this->backindex = this->elementCount;
+        delete[] this->elements;
+        this->elements = newelements;
+        this->capacity = this->capacity * 2;
+    }
     elementCount++;
     elements[backindex] = x;
     backindex = (backindex + 1) % capacity;
@@ -26,7 +43,12 @@ void Queue::enqueue(int x) {
 
 // Description:  Removes the frontmost element (O(1))
 // Precondition:  Queue not empty
-void Queue::dequeue() {
+void Queue::dequeue() 
+{
+    if ((this->elementCount <= (this->capacity / 4)) && ((this->capacity / 2) >= this->INITIAL_CAPACITY))
+    {
+
+    }
     elementCount--;
     frontindex = (frontindex + 1) % capacity;
 } 
