@@ -24,6 +24,9 @@ class Queue {
         Queue();
 
 
+        ~Queue();
+
+
         // Description:  Inserts element x at the back (O(1))
         void enqueue(int x);
 
